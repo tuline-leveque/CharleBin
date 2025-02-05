@@ -95,23 +95,23 @@ class Vizhash16x16
         // Then use these integers to drive the creation of an image.
         $image = imagecreatetruecolor($this->width, $this->height);
 
-        $r = $r0 = $this->getInt();
-        $g = $g0 = $this->getInt();
-        $b = $b0 = $this->getInt();
+        $red = $red0 = $this->getInt();
+        $green = $green0 = $this->getInt();
+        $blue = $blue0 = $this->getInt();
 
         // First, create an image with a specific gradient background.
         $op = 'v';
         if (($this->getInt() % 2) == 0) {
             $op = 'h';
         }
-        $image = $this->degrade($image, $op, array($r0, $g0, $b0), array(0, 0, 0));
+        $image = $this->degrade($image, $op, array($red0, $green0, $blue0), array(0, 0, 0));
 
         for ($i = 0; $i < 7; ++$i) {
             $action = $this->getInt();
-            $color  = imagecolorallocate($image, $r, $g, $b);
-            $r      = $r0      = ($r0 + $this->getInt() / 25) % 256;
-            $g      = $g0      = ($g0 + $this->getInt() / 25) % 256;
-            $b      = $b0      = ($b0 + $this->getInt() / 25) % 256;
+            $color  = imagecolorallocate($image, $red, $green, $blue);
+            $red      = $red0      = ($red0 + $this->getInt() / 25) % 256;
+            $green      = $green0      = ($green0 + $this->getInt() / 25) % 256;
+            $blue      = $blue0      = ($blue0 + $this->getInt() / 25) % 256;
             $this->drawshape($image, $action, $color);
         }
 
@@ -190,13 +190,13 @@ class Vizhash16x16
             (($color2[2] - $color1[2]) / $size),
         );
         for ($i = 0; $i < $size; ++$i) {
-            $r = $color1[0] + ($diffs[0] * $i);
-            $g = $color1[1] + ($diffs[1] * $i);
-            $b = $color1[2] + ($diffs[2] * $i);
+            $red = $color1[0] + ($diffs[0] * $i);
+            $green = $color1[1] + ($diffs[1] * $i);
+            $blue = $color1[2] + ($diffs[2] * $i);
             if ($direction == 'h') {
-                imageline($img, $i, 0, $i, $sizeinv, imagecolorallocate($img, $r, $g, $b));
+                imageline($img, $i, 0, $i, $sizeinv, imagecolorallocate($img, $red, $green, $blue));
             } else {
-                imageline($img, 0, $i, $sizeinv, $i, imagecolorallocate($img, $r, $g, $b));
+                imageline($img, 0, $i, $sizeinv, $i, imagecolorallocate($img, $red, $green, $blue));
             }
         }
         return $img;
